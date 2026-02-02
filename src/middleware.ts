@@ -2,7 +2,7 @@
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
 
-export async function middleware(req: NextRequest) {
+export function middleware(req: NextRequest) {
   const url = req.nextUrl.clone();
 
   const protectedPaths = ["/dashboard", "/students", "/coaches", "/schedules"];
@@ -10,12 +10,19 @@ export async function middleware(req: NextRequest) {
     return NextResponse.next();
   }
 
-  // Vérifie via cookie access_token présent (check minimal)
-  const access = req.cookies.get("access_token")?.value;
-  if (!access) {
+  // C1: cookie de session opaque
+  const sid = req.cookies.get("session_id")?.value; // <-- adapte au nom exact cookieName()
+  if (!sid) {
     url.pathname = "/authentication/signin";
     return NextResponse.redirect(url);
   }
+
+  const isAuthRoute = url.pathname.startsWith("/authentication");
+  if (isAuthRoute && sid) {
+    url.pathname = "/dashboard";
+    return NextResponse.redirect(url);
+  }
+
 
   return NextResponse.next();
 }
