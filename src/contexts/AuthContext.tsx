@@ -2,10 +2,12 @@
 
 import React, { createContext, useCallback, useContext, useEffect, useMemo, useState } from "react";
 
+type Role = "admin" | "coach" | "student";
+
 type User = {
   id: string;
   username: string;
-  role: string;
+  role: Role;
 };
 
 type AuthContextValue = {
