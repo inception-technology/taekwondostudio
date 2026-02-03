@@ -10,7 +10,7 @@ export function RequireGuest({ children }: { children: React.ReactNode }) {
 
   useEffect(() => {
     if (!isLoading && isAuthenticated) {
-      router.replace("/dashboard");
+      router.replace("/user/dashboard");
     }
   }, [isAuthenticated, isLoading, router]);
 

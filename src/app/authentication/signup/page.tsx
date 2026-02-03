@@ -1,5 +1,6 @@
 "use client";
-
+import RootHeader from "@/components/shared/RootHeader";
+import SignupForm from "../signup/form";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 
@@ -28,8 +29,8 @@ export default function SignUpPage() {
       );
       // Si erreur
       if (!res.ok) throw new Error();
-      // Redirige vers signin après signup réussi
-      router.push("/authentication/signin");
+      // Redirige vers login après signup réussi
+      router.push("/authentication/login");
     } catch {
       setError("Signup failed");
     } finally {
@@ -38,47 +39,17 @@ export default function SignUpPage() {
   };
 
   return (
-    <div className="flex min-h-screen items-center justify-center">
-      <form
-        onSubmit={handleSubmit}
-        className="w-full max-w-md rounded-lg border p-8 shadow"
+    <>
+    <RootHeader />
+    <SignupForm />
+    <div className="text-center">
+      <a
+        href="/authentication/login"
+        className="text-sm text-blue-600 hover:underline"
       >
-        <h1 className="mb-6 text-2xl font-semibold">Sign Up</h1>
-
-        {error && (
-          <p className="mb-4 rounded bg-red-100 p-2 text-sm text-red-600">
-            {error}
-          </p>
-        )}
-
-        <div className="mb-4">
-          <label className="mb-1 block text-sm">Username</label>
-          <input
-            className="w-full rounded border px-3 py-2"
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
-            required
-          />
-        </div>
-
-        <div className="mb-6">
-          <label className="mb-1 block text-sm">Password</label>
-          <input
-            type="password"
-            className="w-full rounded border px-3 py-2"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            required
-          />
-        </div>
-
-        <button
-          disabled={loading}
-          className="w-full rounded bg-black px-4 py-2 text-white disabled:opacity-50"
-        >
-          {loading ? "Creating account..." : "Sign Up"}
-        </button>
-      </form>
+        Already have an account? Login
+      </a>
     </div>
+    </>
   );
 }

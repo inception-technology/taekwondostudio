@@ -14,7 +14,7 @@ import {
 type Role = "admin" | "coach" | "student";
 
 const NAV = [
-  { href: "/dashboard", label: "Dashboard", roles: ["admin", "coach"] as Role[] },
+  { href: "dashboard", label: "Dashboard", roles: ["admin", "coach"] as Role[] },
   { href: "/students", label: "Students", roles: ["admin", "coach"] as Role[] },
   { href: "/coaches", label: "Coaches", roles: ["admin"] as Role[] },
   { href: "/schedules", label: "Schedules", roles: ["admin", "coach"] as Role[] },
@@ -31,19 +31,19 @@ export function Navigation() {
 
   const handleLogout = async () => {
     await logout();
-    router.replace("/authentication/signin");
+    router.replace("/authentication/login");
   };
 
   return (
     <NavigationMenu>
       <NavigationMenuList>
         {items.map((item) => (
-          <NavigationMenuItem key={item.href}>
+          <NavigationMenuItem key={'/user/' + item.href}>
             <NavigationMenuLink asChild className={navigationMenuTriggerStyle()}>
               {item.href === "/logout" ? (
                 <button onClick={handleLogout}>{item.label}</button>
               ) : (
-                <Link href={item.href}>{item.label}</Link>
+                <Link href={'/user/' + item.href}>{item.label}</Link>
               )}
             </NavigationMenuLink>
           </NavigationMenuItem>

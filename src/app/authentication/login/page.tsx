@@ -2,8 +2,9 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { useAuth } from "@/contexts/AuthContext";
+import RootHeader from "@/components/shared/RootHeader";
 
-export default function SignInPage() {
+export default function LoginPage() {
   const router = useRouter();
   const { login } = useAuth();
 
@@ -19,7 +20,7 @@ export default function SignInPage() {
 
     try {
       await login(username, password);
-      router.push("/dashboard");
+      router.push("/user/dashboard");
     } catch {
       setError("Invalid credentials");
     } finally {
@@ -28,12 +29,14 @@ export default function SignInPage() {
   };
 
   return (
-      <div className="flex min-h-screen items-center justify-center">
+    <>
+      <RootHeader />
+      <div className="flex items-center justify-center bg-gray-50 p-20 flex-col">
         <form
           onSubmit={handleSubmit}
           className="w-full max-w-md rounded-lg border p-8 shadow"
         >
-        <h1 className="mb-6 text-2xl font-semibold">Sign In</h1>
+        <h1 className="mb-6 text-2xl font-semibold">Login</h1>
 
         {error && (
           <p className="mb-4 rounded bg-red-100 p-2 text-sm text-red-600">
@@ -66,9 +69,18 @@ export default function SignInPage() {
           disabled={loading}
           className="w-full rounded bg-black px-4 py-2 text-white disabled:opacity-50"
         >
-          {loading ? "Signing in..." : "Sign In"}
+          {loading ? "Logging in..." : "Login"}
         </button>
       </form>
+      <div className="mt-4 text-center">
+        <a
+          href="/authentication/signup"
+          className="text-sm text-blue-600 hover:underline"
+        >
+          Don&apos;t have an account? Sign Up
+        </a>
+      </div>
     </div>
+    </>
   );
 }

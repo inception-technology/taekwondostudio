@@ -29,3 +29,17 @@ export async function apiFetch(input: RequestInfo, init: RequestInit = {}) {
     },
   });
 }
+
+export async function fetchKpis() {
+  const res = await fetch("/api/kpis", {
+    method: "GET",
+    cache: "no-store",
+  });
+
+  if (!res.ok) {
+    throw new Error("Failed to load KPIs");
+  }
+
+  return res.json();
+}
+

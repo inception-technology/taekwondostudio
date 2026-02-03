@@ -11,9 +11,9 @@ export default function LogoutPage() {
   useEffect(() => {
     (async () => {
       await logout();
-      router.replace("/authentication/signin");
+      router.replace("/");
     })();
   }, [logout, router]);
 
-  return <p>Signing out…</p>;
+  return <p>Logout…</p>;
 }
